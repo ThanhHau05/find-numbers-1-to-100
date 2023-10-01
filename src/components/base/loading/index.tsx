@@ -1,6 +1,9 @@
 import clsx from 'clsx';
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { DataFirebase } from '@/firebase/handle';
 
 import { BasicColors } from '../basic colors';
 
@@ -20,6 +23,8 @@ export const Loading = ({
   >;
   setShowLoading: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     let i = 0;
     const updateNumber = () => {
@@ -40,7 +45,12 @@ export const Loading = ({
   }, []);
   return (
     <div
-      onClick={() => (value === 100 ? setShowLoading(false) : null)}
+      onClick={async () => {
+        if (value === 100) {
+          setShowLoading(false);
+          await DataFirebase.AddNewUserId(dispatch);
+        }
+      }}
       className={clsx(
         'absolute z-50 flex h-full w-full items-center justify-center bg-white transition-all duration-300',
         value >= 99 ? 'bg-white/90' : 'bg-white',

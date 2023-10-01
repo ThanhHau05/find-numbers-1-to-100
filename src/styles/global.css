@@ -23,3 +23,12 @@ a:hover {
 .circle_loading {
   border-radius: 64% 36% 57% 43% / 43% 50% 50% 57%;
 }
+
+.circle_text_number {
+border-radius: 51% 49% 56% 44% / 53% 49% 51% 47% ;
+}
+
+h2, span, p, button, input {
+  --tw-text-opacity: 1;
+  color: rgb(26 32 44 / var(--tw-text-opacity));
+}
