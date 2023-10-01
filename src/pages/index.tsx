@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Loading } from '@/components/base/loading';
 import { Images } from '@/components/images';
-import { ContainerHome } from '@/components/page/home';
+import { ContainerHome, RenderID } from '@/components/page/home';
 import { selector } from '@/redux';
 
 const Home = () => {
@@ -20,6 +20,7 @@ const Home = () => {
   return (
     <div className="flex h-screen w-full items-center justify-center bg-slate-300">
       <div className="relative h-full w-full bg-slate-50 sm:w-400">
+        <RenderID />
         {!currentUserID && showloading ? (
           <Loading
             color={number.color}
