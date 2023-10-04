@@ -1,5 +1,9 @@
 @tailwind base;
 
+* {
+  user-select: none;
+}
+
 a {
   @apply text-blue-700;
 }

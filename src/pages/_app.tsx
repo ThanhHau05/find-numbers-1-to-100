@@ -6,6 +6,7 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { MainProvider } from '@/context/main-context';
 import Redux from '@/redux';
 
 const font = Sriracha({ weight: '400', subsets: ['latin', 'vietnamese'] });
@@ -15,7 +16,9 @@ const { store, persistor } = Redux();
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <ContainerMyApp pageProps={pageProps} Component={Component} />
+      <MainProvider>
+        <ContainerMyApp pageProps={pageProps} Component={Component} />
+      </MainProvider>
     </PersistGate>
   </Provider>
 );
