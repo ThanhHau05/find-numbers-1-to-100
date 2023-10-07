@@ -14,6 +14,11 @@ export interface SelectOptionContent {
   value: string;
 }
 
+export interface PlayingModeInformation {
+  id?: string;
+  mode: string;
+}
+
 export const SELECT_OPTION_MODE_SANGLE_PLAYER: SelectOptionMode[] = [
   {
     title: 'Unlimited time',

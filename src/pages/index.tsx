@@ -5,11 +5,14 @@ import { Loading } from '@/components/base/loading';
 import { Images } from '@/components/images';
 import { ContainerHome, RenderID } from '@/components/page/home';
 import { ShowOptionMode } from '@/components/page/home/ShowOptionMode';
+import { PlayGame } from '@/components/page/play';
 import { MainContext } from '@/context/main-context';
 import { selector } from '@/redux';
 
 const Home = () => {
   const { currentUserID } = useSelector(selector.user);
+
+  const { currentModeData } = useSelector(selector.data);
 
   const { valueshowmode } = useContext(MainContext);
 
@@ -32,9 +35,15 @@ const Home = () => {
             setShowLoading={setShowLoading}
           />
         ) : null}
-        {valueshowmode ? <ShowOptionMode /> : null}
-        <RenderID />
-        <ContainerHome />
+        {currentModeData && currentModeData.mode ? (
+          <PlayGame data={currentModeData} />
+        ) : (
+          <>
+            {valueshowmode ? <ShowOptionMode /> : null}
+            <RenderID />
+            <ContainerHome />
+          </>
+        )}
         <img
           src={Images.PaperBackground.src}
           alt=""
