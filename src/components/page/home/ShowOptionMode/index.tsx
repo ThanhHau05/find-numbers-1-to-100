@@ -1,9 +1,11 @@
 import { useContext } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { ButtonChildren } from '@/components/base/button children';
 import { SELECT_OPTION_MODE_SANGLE_PLAYER } from '@/components/constants/select-options';
 import { MainContext } from '@/context/main-context';
 import { useClickOutSide } from '@/hooks/useClickOutSide';
+import { DataActions } from '@/redux';
 
 export const ShowOptionMode = () => {
   const { valueshowmode, setValueShowMode } = useContext(MainContext);
@@ -25,6 +27,7 @@ export const ShowOptionMode = () => {
 };
 
 export const RenderSelectModeSinglePlayer = () => {
+  const dispatch = useDispatch();
   return (
     <>
       <h2 className="mb-5 text-center text-2xl">Select Mode</h2>
@@ -35,6 +38,9 @@ export const RenderSelectModeSinglePlayer = () => {
             title={item.title}
             hoverBgColor
             hoverTextColor
+            onClick={() =>
+              dispatch(DataActions.setCurrentModeData({ mode: item.value }))
+            }
           >
             {typeof item.Title2 === 'string' ? (
               <h2 className="text-lg transition-all group-hover:scale-125 group-hover:text-white">
