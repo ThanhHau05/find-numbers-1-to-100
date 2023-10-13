@@ -3,27 +3,39 @@ import { CgInfinity } from 'react-icons/cg';
 import { FaSignOutAlt } from 'react-icons/fa';
 
 import { ButtonNumber } from '@/components/base/button number';
-import type { PlayingModeInformation } from '@/components/constants/select-options';
+import type { PlayingModeInformation, SelectOptionNumber } from '@/components/constants/select-options';
 import { Images } from '@/components/images';
+import { BasicColors } from '@/components/base/basic colors';
 
 export const PlayGame = ({ data }: { data: PlayingModeInformation }) => {
-  const { mode } = data;
+  const { mode, arrayNumber, numberToSearch } = data;
+
   return (
     <div className="absolute z-10 h-full w-full">
       <div className="flex w-full items-center justify-between bg-gray-50 px-4 py-2.5 shadow-md">
         <PlayGameLogo />
-        <NumberToSearch number={100} />
+        <NumberToSearch number={numberToSearch} />
         <Timer mode={mode} />
       </div>
-      <div className="flex h-[calc(100%-95px)] w-full items-center justify-center">
-        <ButtonNumber angle={99} color="" />
+      <div className="h-[calc(100%-95px)] w-full items-center justify-center grid grid-cols-6 relative -left-2 justify-items-center grid-rows-17">
+        <RenderButtonNumber data={arrayNumber} />
       </div>
       <div className="w-full pb-5 pr-5">
-        <FaSignOutAlt className="ml-auto cursor-pointer text-xl text-gray-800 drop-shadow-md" />
+        <FaSignOutAlt className="ml-auto cursor-pointer text-xl text-gray-800 drop-shadow-md rota" />
       </div>
     </div>
   );
 };
+
+export const RenderButtonNumber = ({data}: {data: SelectOptionNumber[]}) => {
+  return data.map((item) => {
+    let randomIndex = Math.floor(Math.random() * BasicColors.length);
+      randomIndex = Math.min(randomIndex, BasicColors.length - 1);
+      return (
+        <ButtonNumber key={item.number} angle={item.angle} number={item.number} color={item.color} left={item.left} top={item.top}/>
+      )
+  });
+}
 
 const Timer = ({ mode }: { mode: string }) => {
   return (

@@ -6,6 +6,7 @@ import { SELECT_OPTION_MODE_SANGLE_PLAYER } from '@/components/constants/select-
 import { MainContext } from '@/context/main-context';
 import { useClickOutSide } from '@/hooks/useClickOutSide';
 import { DataActions } from '@/redux';
+import { handleCreateNewGame } from '../handle';
 
 export const ShowOptionMode = () => {
   const { valueshowmode, setValueShowMode } = useContext(MainContext);
@@ -39,7 +40,7 @@ export const RenderSelectModeSinglePlayer = () => {
             hoverBgColor
             hoverTextColor
             onClick={() =>
-              dispatch(DataActions.setCurrentModeData({ mode: item.value }))
+              dispatch(DataActions.setCurrentModeData({ mode: item.value, arrayNumber: handleCreateNewGame(), time: item.time, numberToSearch: 1 }))
             }
           >
             {typeof item.Title2 === 'string' ? (
