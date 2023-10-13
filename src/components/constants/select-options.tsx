@@ -6,6 +6,7 @@ export interface SelectOptionMode {
   title: string;
   Title2: IconType | string;
   value: string;
+  time?: number;
 }
 
 export interface SelectOptionContent {
@@ -17,6 +18,17 @@ export interface SelectOptionContent {
 export interface PlayingModeInformation {
   id?: string;
   mode: string;
+  time?: number;
+  arrayNumber: SelectOptionNumber[];
+  numberToSearch: number;
+}
+
+export interface SelectOptionNumber {
+  number: number;
+  angle: number;
+  color: string;
+  left: number;
+  top: number;
 }
 
 export const SELECT_OPTION_MODE_SANGLE_PLAYER: SelectOptionMode[] = [
@@ -29,16 +41,19 @@ export const SELECT_OPTION_MODE_SANGLE_PLAYER: SelectOptionMode[] = [
     title: 'Easy',
     Title2: '5 min',
     value: 'easy',
+    time: 5,
   },
   {
     title: 'Medium',
     Title2: '3 min',
     value: 'medium',
+    time: 3,
   },
   {
     title: 'Difficult',
     Title2: '1 min',
     value: 'difficult',
+    time: 1,
   },
 ];
 

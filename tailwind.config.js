@@ -15,6 +15,9 @@ module.exports = {
       '6xl': '4rem',
     },
     extend: {
+      gridTemplateRows: {
+        '17': 'repeat(17, minmax(0, 1fr))',
+      },
       spacing: {
         400: '25rem',
       },
