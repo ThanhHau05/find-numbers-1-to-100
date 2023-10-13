@@ -24,6 +24,5 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "prettier.ignorePath": ".gitignore", // Don't run prettier for files listed in .gitignore
-  "sqltools.autoConnectTo": "Prevent Dialog Box" // Don't show the connection dialog box when opening SQLTools
+  "prettier.ignorePath": ".gitignore" // Don't run prettier for files listed in .gitignore
 }
