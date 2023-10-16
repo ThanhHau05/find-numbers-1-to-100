@@ -1,14 +1,22 @@
-import { BsStopwatchFill } from 'react-icons/bs';
-import { CgInfinity } from 'react-icons/cg';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { BsStopwatchFill } from "react-icons/bs";
+import { CgInfinity } from "react-icons/cg";
+import { FaSignOutAlt } from "react-icons/fa";
 
-import { ButtonNumber } from '@/components/base/button number';
-import type { PlayingModeInformation, SelectOptionNumber } from '@/components/constants/select-options';
-import { Images } from '@/components/images';
-import { BasicColors } from '@/components/base/basic colors';
+import { ButtonNumber } from "@/components/base/button number";
+import type { SelectOptionNumber } from "@/components/constants/select-options";
+import { Images } from "@/components/images";
+import { BasicColors } from "@/components/base/basic colors";
+import { handleClickNumber } from "./handle";
+import { useDispatch, useSelector } from "react-redux";
+import { selector } from "@/redux";
+import { useContext } from "react";
+import { MainContext } from "@/context/main-context";
 
-export const PlayGame = ({ data }: { data: PlayingModeInformation }) => {
-  const { mode, arrayNumber, numberToSearch } = data;
+export const PlayGame = () => {
+  const { currentModeData } = useSelector(selector.data);
+  const { mode, arrayNumber, numberToSearch } = currentModeData;
+
+  const { setShowOutGame } = useContext(MainContext);
 
   return (
     <div className="absolute z-10 h-full w-full">
@@ -18,30 +26,60 @@ export const PlayGame = ({ data }: { data: PlayingModeInformation }) => {
         <Timer mode={mode} />
       </div>
       <div className="h-[calc(100%-95px)] w-full items-center justify-center grid grid-cols-6 relative -left-2 justify-items-center grid-rows-17">
-        <RenderButtonNumber data={arrayNumber} />
+        <RenderButtonNumber
+          data={arrayNumber}
+          numberToSearch={numberToSearch}
+        />
       </div>
       <div className="w-full pb-5 pr-5">
-        <FaSignOutAlt className="ml-auto cursor-pointer text-xl text-gray-800 drop-shadow-md rota" />
+        <FaSignOutAlt
+          onClick={() => setShowOutGame(true)}
+          className="ml-auto cursor-pointer text-xl text-gray-800 drop-shadow-md rota"
+        />
       </div>
     </div>
   );
 };
 
-export const RenderButtonNumber = ({data}: {data: SelectOptionNumber[]}) => {
+export const RenderButtonNumber = ({
+  data,
+  numberToSearch,
+}: {
+  data: SelectOptionNumber[];
+  numberToSearch: number;
+}) => {
+  const { currentModeData } = useSelector(selector.data);
+  const dispatch = useDispatch();
   return data.map((item) => {
     let randomIndex = Math.floor(Math.random() * BasicColors.length);
-      randomIndex = Math.min(randomIndex, BasicColors.length - 1);
-      return (
-        <ButtonNumber key={item.number} angle={item.angle} number={item.number} color={item.color} left={item.left} top={item.top}/>
-      )
+    randomIndex = Math.min(randomIndex, BasicColors.length - 1);
+    return (
+      <ButtonNumber
+        key={item.number}
+        angle={item.angle}
+        number={item.number}
+        color={item.color}
+        left={item.left}
+        top={item.top}
+        onClick={() =>
+          handleClickNumber({
+            data: currentModeData,
+            dispatch,
+            number: item.number,
+            numberToSearch,
+          })
+        }
+        clicked={item.clicked}
+      />
+    );
   });
-}
+};
 
 const Timer = ({ mode }: { mode: string }) => {
   return (
     <div className="flex items-center justify-center">
       <BsStopwatchFill className="text-xl text-gray-800 drop-shadow-md" />
-      {mode === 'unlimited' ? (
+      {mode === "unlimited" ? (
         <CgInfinity className="mx-2 text-xl text-gray-800 drop-shadow-md" />
       ) : null}
     </div>

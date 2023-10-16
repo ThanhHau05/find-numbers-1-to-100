@@ -13,7 +13,7 @@ interface IActionTypes extends DefaultActionTypes {
 }
 
 interface IActionCreators extends DefaultActionCreators {
-  setCurrentModeData: (id: PlayingModeInformation) => AnyAction;
+  setCurrentModeData: (data: PlayingModeInformation) => AnyAction;
 }
 
 type IActions = DataAction | AnyAction;
