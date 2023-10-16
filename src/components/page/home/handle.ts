@@ -27,6 +27,7 @@ export const handleCreateNewGame = () => {
       color: BasicColors[randomIndex] ?? 'text-black',
       left: 0,
       top: 0,
+      clicked: false,
     }
   });
   newGame = newGame.sort(() => Math.random() - 0.5);

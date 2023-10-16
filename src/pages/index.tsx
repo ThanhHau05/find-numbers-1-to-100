@@ -1,22 +1,23 @@
-import { useContext, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import { Loading } from '@/components/base/loading';
-import { Images } from '@/components/images';
-import { ContainerHome, RenderID } from '@/components/page/home';
-import { ShowOptionMode } from '@/components/page/home/ShowOptionMode';
-import { PlayGame } from '@/components/page/play';
-import { MainContext } from '@/context/main-context';
-import { selector } from '@/redux';
+import { Loading } from "@/components/base/loading";
+import { Images } from "@/components/images";
+import { ContainerHome, RenderID } from "@/components/page/home";
+import { ShowOptionMode } from "@/components/page/home/ShowOptionMode";
+import { PlayGame } from "@/components/page/play";
+import { MainContext } from "@/context/main-context";
+import { selector } from "@/redux";
+import { NotificationOutgame } from "@/components/base/NotificationOutGame";
 
 const Home = () => {
   const { currentUserID } = useSelector(selector.user);
 
   const { currentModeData } = useSelector(selector.data);
 
-  const { valueshowmode } = useContext(MainContext);
+  const { valueshowmode, showoutgame } = useContext(MainContext);
 
-  const [number, setNumber] = useState({ value: 0, color: 'text-black' });
+  const [number, setNumber] = useState({ value: 0, color: "text-black" });
   const [showloading, setShowLoading] = useState(true);
 
   useEffect(() => {
@@ -35,8 +36,9 @@ const Home = () => {
             setShowLoading={setShowLoading}
           />
         ) : null}
+        {showoutgame ? <NotificationOutgame /> : null}
         {currentModeData && currentModeData.mode ? (
-          <PlayGame data={currentModeData} />
+          <PlayGame />
         ) : (
           <>
             {valueshowmode ? <ShowOptionMode /> : null}

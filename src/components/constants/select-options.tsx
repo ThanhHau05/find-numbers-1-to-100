@@ -1,6 +1,11 @@
-import type { ReactNode } from 'react';
-import { CgInfinity } from 'react-icons/cg';
-import type { IconType } from 'react-icons/lib';
+import type { ReactNode } from "react";
+import { CgInfinity } from "react-icons/cg";
+import type { IconType } from "react-icons/lib";
+
+export interface SelectOptionObject {
+  title: string;
+  value: string;
+}
 
 export interface SelectOptionMode {
   title: string;
@@ -29,37 +34,49 @@ export interface SelectOptionNumber {
   color: string;
   left: number;
   top: number;
+  clicked: boolean;
 }
+
+export const SELECT_OPTION_NOTIFICCATION: SelectOptionObject[] = [
+  {
+    title: "Cancel",
+    value: "cancel",
+  },
+  {
+    title: "Yes",
+    value: "yes",
+  },
+];
 
 export const SELECT_OPTION_MODE_SANGLE_PLAYER: SelectOptionMode[] = [
   {
-    title: 'Unlimited time',
+    title: "Unlimited time",
     Title2: CgInfinity,
-    value: 'unlimited',
+    value: "unlimited",
   },
   {
-    title: 'Easy',
-    Title2: '5 min',
-    value: 'easy',
+    title: "Easy",
+    Title2: "5 min",
+    value: "easy",
     time: 5,
   },
   {
-    title: 'Medium',
-    Title2: '3 min',
-    value: 'medium',
+    title: "Medium",
+    Title2: "3 min",
+    value: "medium",
     time: 3,
   },
   {
-    title: 'Difficult',
-    Title2: '1 min',
-    value: 'difficult',
+    title: "Difficult",
+    Title2: "1 min",
+    value: "difficult",
     time: 1,
   },
 ];
 
 export const BUTTON_HOME: SelectOptionContent[] = [
   {
-    title: 'Single Player',
+    title: "Single Player",
     children: (
       <div className="relative mb-2 h-24 w-full">
         <div className="absolute left-2.5 inline-block rotate-12 text-4xl text-amber-500">
@@ -74,10 +91,10 @@ export const BUTTON_HOME: SelectOptionContent[] = [
         </div>
       </div>
     ),
-    value: 'single',
+    value: "single",
   },
   {
-    title: 'Play with Friends',
+    title: "Play with Friends",
     children: (
       <div className="relative flex h-24 w-full flex-col justify-around">
         <div className="inline-block rotate-12 pl-2 text-4xl leading-8 text-green-500">
@@ -95,6 +112,6 @@ export const BUTTON_HOME: SelectOptionContent[] = [
         </div>
       </div>
     ),
-    value: 'friends',
+    value: "friends",
   },
 ];
