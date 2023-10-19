@@ -9,13 +9,15 @@ import { PlayGame } from "@/components/page/play";
 import { MainContext } from "@/context/main-context";
 import { selector } from "@/redux";
 import { NotificationOutgame } from "@/components/base/NotificationOutGame";
+import { NotificationFinishGame } from "@/components/base/NotificationFinishGame";
 
 const Home = () => {
   const { currentUserID } = useSelector(selector.user);
 
   const { currentModeData } = useSelector(selector.data);
 
-  const { valueshowmode, showoutgame } = useContext(MainContext);
+  const { valueshowmode, showoutgame, showfinishgame } =
+    useContext(MainContext);
 
   const [number, setNumber] = useState({ value: 0, color: "text-black" });
   const [showloading, setShowLoading] = useState(true);
@@ -36,7 +38,8 @@ const Home = () => {
             setShowLoading={setShowLoading}
           />
         ) : null}
-        {showoutgame ? <NotificationOutgame /> : null}
+        {showfinishgame.length !== 0 ? <NotificationFinishGame /> : null}
+        {showoutgame && !showfinishgame ? <NotificationOutgame /> : null}
         {currentModeData && currentModeData.mode ? (
           <PlayGame />
         ) : (
