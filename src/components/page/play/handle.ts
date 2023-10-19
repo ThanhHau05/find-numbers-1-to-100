@@ -1,20 +1,21 @@
-import { PlayingModeInformation } from "@/components/constants/select-options";
+import {
+  PlayingModeInformation,
+  SelectOptionNumber,
+} from "@/components/constants/select-options";
 import { DataActions } from "@/redux";
 import { Dispatch } from "react";
 import { AnyAction } from "redux";
 
 export const handleClickNumber = async ({
   number,
-  numberToSearch,
   dispatch,
   data,
 }: {
   number: number;
-  numberToSearch: number;
   dispatch: Dispatch<AnyAction>;
   data: PlayingModeInformation;
 }) => {
-  if (number === numberToSearch) {
+  if (number === data.numberToSearch) {
     const newArr = data.arrayNumber.map((item) => {
       if (item.number === number) {
         return {
@@ -46,5 +47,34 @@ export const handleOutGame = ({
   setShowOutGame(false);
   if (value === "yes") {
     dispatch(DataActions.setCurrentModeData(<PlayingModeInformation>{}));
+  }
+};
+
+export const handleFinishGame = ({
+  mode,
+  handleCreateNewGame,
+  value,
+  dispatch,
+}: {
+  mode: string;
+  handleCreateNewGame: () => SelectOptionNumber[];
+  value: string;
+  dispatch: Dispatch<AnyAction>;
+}) => {
+  if (mode === "unlimited") {
+    if (value === "home") {
+      dispatch(DataActions.setCurrentModeData(<PlayingModeInformation>{}));
+    } else if (value === "play again") {
+      dispatch(
+        DataActions.setCurrentModeData({
+          mode,
+          arrayNumber: handleCreateNewGame(),
+          time: 0,
+          numberToSearch: 1,
+        })
+      );
+    }
+  } else {
+    //
   }
 };

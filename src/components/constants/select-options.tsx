@@ -37,6 +37,17 @@ export interface SelectOptionNumber {
   clicked: boolean;
 }
 
+export const SELECT_OPTION_BUTTON_FINISH_GAME: SelectOptionObject[] = [
+  {
+    title: "PLAY AGAIN",
+    value: "play again",
+  },
+  {
+    title: "HOME",
+    value: "home",
+  },
+];
+
 export const SELECT_OPTION_NOTIFICCATION: SelectOptionObject[] = [
   {
     title: "Cancel",
