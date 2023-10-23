@@ -11,7 +11,7 @@ export interface SelectOptionMode {
   title: string;
   Title2: IconType | string;
   value: string;
-  time?: number;
+  time: string;
 }
 
 export interface SelectOptionContent {
@@ -23,7 +23,7 @@ export interface SelectOptionContent {
 export interface PlayingModeInformation {
   id?: string;
   mode: string;
-  time?: number;
+  time: string;
   arrayNumber: SelectOptionNumber[];
   numberToSearch: number;
 }
@@ -64,24 +64,25 @@ export const SELECT_OPTION_MODE_SANGLE_PLAYER: SelectOptionMode[] = [
     title: "Unlimited time",
     Title2: CgInfinity,
     value: "unlimited",
+    time: "0",
   },
   {
     title: "Easy",
     Title2: "5 min",
     value: "easy",
-    time: 5,
+    time: "5:00",
   },
   {
     title: "Medium",
     Title2: "3 min",
     value: "medium",
-    time: 3,
+    time: "3:00",
   },
   {
     title: "Difficult",
     Title2: "1 min",
     value: "difficult",
-    time: 1,
+    time: "1:30",
   },
 ];
 

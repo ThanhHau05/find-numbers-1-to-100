@@ -1,25 +1,34 @@
-import { SELECT_OPTION_BUTTON_FINISH_GAME } from "@/components/constants/select-options";
+import {
+  SELECT_OPTION_BUTTON_FINISH_GAME,
+  SELECT_OPTION_MODE_SANGLE_PLAYER,
+} from "@/components/constants/select-options";
 import { handleCreateNewGame } from "@/components/page/home";
 import { PlayGameLogo } from "@/components/page/play";
 import { handleFinishGame } from "@/components/page/play/handle";
 import { MainContext } from "@/context/main-context";
 import { selector } from "@/redux";
 import clsx from "clsx";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export const NotificationFinishGame = () => {
+  const { currentModeData } = useSelector(selector.data);
+  const [complete] = useState(currentModeData.numberToSearch >= 101);
   return (
     <div className="absolute z-30 w-full h-full flex items-center justify-center bg-white/80">
-      {/* <div className="pyro">
-        <div className="before"></div>
-        <div className="after"></div>
-      </div> */}
       <div className="p-5 bg-white rounded-2xl shadow-md border flex items-center justify-center flex-col">
         <PlayGameLogo />
         <div className="pt-4 flex items-center justify-center flex-col">
-          <h2 className="text-4xl uppercase">Complete</h2>
-          <div className="mt-8">
+          <h2 className="text-4xl uppercase">
+            {complete ? "Complete" : "Failure :(("}
+          </h2>
+          <div className="my-3 flex items-center justify-center gap-2">
+            <h2 className="text-lg">You have found:</h2>
+            <h2 className="text-xl">
+              {currentModeData.numberToSearch - 1}/ 100
+            </h2>
+          </div>
+          <div className="mt-5">
             <RenderButton />
           </div>
         </div>
@@ -52,6 +61,10 @@ const RenderButton = () => {
               value: item.value,
               handleCreateNewGame: handleCreateNewGame,
               mode: currentModeData.mode,
+              time:
+                SELECT_OPTION_MODE_SANGLE_PLAYER.find(
+                  (item) => item.value === currentModeData.mode
+                )?.time || "0:00",
             });
           }}
         >

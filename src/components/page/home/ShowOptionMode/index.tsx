@@ -45,7 +45,7 @@ export const RenderSelectModeSinglePlayer = () => {
                   mode: item.value,
                   arrayNumber: handleCreateNewGame(),
                   time: item.time,
-                  numberToSearch: 101,
+                  numberToSearch: 1,
                 })
               )
             }

@@ -7,8 +7,8 @@ import { Images } from "@/components/images";
 import { BasicColors } from "@/components/base/basic colors";
 import { handleClickNumber } from "./handle";
 import { useDispatch, useSelector } from "react-redux";
-import { selector } from "@/redux";
-import { useContext, useEffect } from "react";
+import { DataActions, selector } from "@/redux";
+import { useContext, useEffect, useState } from "react";
 import { MainContext } from "@/context/main-context";
 
 export const PlayGame = () => {
@@ -28,7 +28,7 @@ export const PlayGame = () => {
       <div className="flex w-full items-center justify-between bg-gray-50 px-4 py-2.5 shadow-md">
         <PlayGameLogo />
         <NumberToSearch number={numberToSearch} />
-        <Timer mode={mode} />
+        <Timer />
       </div>
       <div className="h-[calc(100%-95px)] w-full items-center justify-center grid grid-cols-6 relative -left-2 justify-items-center grid-rows-17">
         <RenderButtonNumber />
@@ -70,13 +70,47 @@ export const RenderButtonNumber = () => {
   });
 };
 
-const Timer = ({ mode }: { mode: string }) => {
+const Timer = () => {
+  const { setShowFinishGame } = useContext(MainContext);
+  const { currentModeData } = useSelector(selector.data);
+  const [timer, setTimer] = useState(currentModeData.time);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (currentModeData.mode === "unlimited") return;
+    if (currentModeData.time !== "0:00") {
+      const interval = setInterval(() => {
+        const [minute, second] = currentModeData.time.split(":");
+        if (second === "00") {
+          const time = `${Number(minute) - 1}:59`;
+          setTimer(time);
+          dispatch(
+            DataActions.setCurrentModeData({ ...currentModeData, time })
+          );
+        } else {
+          const newsecond = Number(second) - 1;
+          const time = `${minute}:${
+            newsecond < 10 ? `0${newsecond}` : newsecond
+          }`;
+          setTimer(time);
+          dispatch(
+            DataActions.setCurrentModeData({ ...currentModeData, time })
+          );
+        }
+      }, 1000);
+      return () => clearInterval(interval);
+    } else {
+      setShowFinishGame(currentModeData.mode);
+      return;
+    }
+  }, [currentModeData]);
   return (
     <div className="flex items-center justify-center">
       <BsStopwatchFill className="text-xl text-gray-800 drop-shadow-md" />
-      {mode === "unlimited" ? (
+      {currentModeData.mode === "unlimited" ? (
         <CgInfinity className="mx-2 text-xl text-gray-800 drop-shadow-md" />
-      ) : null}
+      ) : (
+        <h2 className="text-xl pl-2">{timer}</h2>
+      )}
     </div>
   );
 };

@@ -13,11 +13,11 @@ export const NotificationOutgame = () => {
       <div className="p-5 bg-white rounded-2xl shadow-md border">
         <div className="flex items-center text-xl">
           <h2>Notification</h2>
-          <div className="p-2 bg-gray-300 cursor-pointer group hover:bg-slate-500 inline-block rounded-full mr-0 mx-auto">
-            <TfiClose
-              onClick={() => setShowOutGame(false)}
-              className="group-hover:text-white text-sm"
-            />
+          <div
+            onClick={() => setShowOutGame(false)}
+            className="p-2 bg-gray-300 cursor-pointer group hover:bg-slate-500 inline-block rounded-full mr-0 mx-auto"
+          >
+            <TfiClose className="group-hover:text-white text-sm" />
           </div>
         </div>
         <div>
@@ -31,7 +31,7 @@ export const NotificationOutgame = () => {
 
 const RenderButton = () => {
   const dispatch = useDispatch();
-  const { setShowOutGame } = useContext(MainContext);
+  const { setShowOutGame, setValueShowMode } = useContext(MainContext);
   return (
     <div className="flex items-center justify-around">
       {SELECT_OPTION_NOTIFICCATION.map((item) => (
@@ -45,7 +45,12 @@ const RenderButton = () => {
             item.value === "yes" ? "px-4 border-green-400 text-green-600" : null
           )}
           onClick={() =>
-            handleOutGame({ dispatch, value: item.value, setShowOutGame })
+            handleOutGame({
+              dispatch,
+              value: item.value,
+              setShowOutGame,
+              setValueShowMode,
+            })
           }
         >
           {item.title}

@@ -39,13 +39,16 @@ export const handleOutGame = ({
   dispatch,
   value,
   setShowOutGame,
+  setValueShowMode,
 }: {
   dispatch: Dispatch<AnyAction>;
   value: string;
   setShowOutGame: (value: boolean) => void;
+  setValueShowMode: (value: string) => void;
 }) => {
   setShowOutGame(false);
   if (value === "yes") {
+    setValueShowMode("");
     dispatch(DataActions.setCurrentModeData(<PlayingModeInformation>{}));
   }
 };
@@ -55,26 +58,24 @@ export const handleFinishGame = ({
   handleCreateNewGame,
   value,
   dispatch,
+  time,
 }: {
   mode: string;
   handleCreateNewGame: () => SelectOptionNumber[];
   value: string;
   dispatch: Dispatch<AnyAction>;
+  time: string;
 }) => {
-  if (mode === "unlimited") {
-    if (value === "home") {
-      dispatch(DataActions.setCurrentModeData(<PlayingModeInformation>{}));
-    } else if (value === "play again") {
-      dispatch(
-        DataActions.setCurrentModeData({
-          mode,
-          arrayNumber: handleCreateNewGame(),
-          time: 0,
-          numberToSearch: 1,
-        })
-      );
-    }
-  } else {
-    //
+  if (value === "home") {
+    dispatch(DataActions.setCurrentModeData(<PlayingModeInformation>{}));
+  } else if (value === "play again") {
+    dispatch(
+      DataActions.setCurrentModeData({
+        mode,
+        arrayNumber: handleCreateNewGame(),
+        time,
+        numberToSearch: 1,
+      })
+    );
   }
 };
