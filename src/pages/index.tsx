@@ -3,7 +3,11 @@ import { useSelector } from "react-redux";
 
 import { Loading } from "@/components/base/loading";
 import { Images } from "@/components/images";
-import { ContainerHome, RenderID } from "@/components/page/home";
+import {
+  ContainerHome,
+  RenderID,
+  handleUpdateUserStatus,
+} from "@/components/page/home";
 import { ShowOptionMode } from "@/components/page/home/ShowOptionMode";
 import { PlayGame } from "@/components/page/play";
 import { MainContext } from "@/context/main-context";
@@ -27,6 +31,11 @@ const Home = () => {
       setShowLoading(false);
     }
   }, [currentUserID]);
+
+  useEffect(() => {
+    if (currentUserID !== 0) handleUpdateUserStatus(currentUserID);
+  }, [currentUserID]);
+
   return (
     <div className="flex h-screen w-full items-center justify-center bg-slate-300">
       <div className="relative h-full w-full bg-slate-50 sm:w-400">

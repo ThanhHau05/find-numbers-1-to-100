@@ -1,5 +1,6 @@
 import { BasicColors } from "@/components/base/basic colors";
 import { SelectOptionNumber } from "@/components/constants/select-options";
+import { DataFirebase } from "@/firebase/handle";
 
 export const handleCopyID = (
   value: number,
@@ -46,4 +47,65 @@ export const handleCreateNewGame = () => {
     };
   });
   return newGame;
+};
+
+function handleVisibilityChange(currentUserID: number): (event: Event) => void {
+  return () => {
+    if (document.hidden) {
+      DataFirebase.UpdateUserStatus(currentUserID, false);
+    } else {
+      DataFirebase.UpdateUserStatus(currentUserID, true);
+    }
+  };
+}
+
+export const handleUpdateUserStatus = async (currentUserID: number) => {
+  DataFirebase.UpdateUserStatus(currentUserID, true);
+
+  document.addEventListener(
+    "visibilitychange",
+    handleVisibilityChange(currentUserID)
+  );
+
+  window.addEventListener("beforeunload", () => {
+    DataFirebase.UpdateUserStatus(currentUserID, false);
+  });
+
+  return () => {
+    DataFirebase.UpdateUserStatus(currentUserID, false);
+    document.removeEventListener(
+      "visibilitychange",
+      handleVisibilityChange(currentUserID)
+    );
+    window.removeEventListener("beforeunload", () => {
+      DataFirebase.UpdateUserStatus(currentUserID, false);
+    });
+  };
+};
+
+export const handleInputIDSearch = (
+  id: number,
+  setIDSearch: (id: string) => void
+) => {
+  if (id.toString().length <= 6) {
+    setIDSearch(id.toString());
+  }
+};
+
+export const handleIDSearch = async (id: number, idUser: number) => {
+  const IDList = await DataFirebase.GetIDList();
+  if (IDList.length !== 0 && IDList.includes(id) && id !== idUser) {
+    const status = await DataFirebase.GetUserInfo(id);
+    if (status) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const handleInvitePlayers = async (idInvite: number, idUser: number) => {
+  const invitation = await DataFirebase.GetInvitationUser(idInvite);
+  if (invitation === 0) {
+    await DataFirebase.SetInvitationUser(idInvite, idUser);
+  }
 };
