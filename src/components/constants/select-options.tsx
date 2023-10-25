@@ -2,6 +2,11 @@ import type { ReactNode } from "react";
 import { CgInfinity } from "react-icons/cg";
 import type { IconType } from "react-icons/lib";
 
+export interface SelectOptionUserInfo {
+  status: boolean;
+  invitation: number;
+}
+
 export interface SelectOptionObject {
   title: string;
   value: string;
@@ -56,6 +61,17 @@ export const SELECT_OPTION_NOTIFICCATION: SelectOptionObject[] = [
   {
     title: "Yes",
     value: "yes",
+  },
+];
+
+export const SELECT_OPTION_PLAY_WITH_FRIEND: SelectOptionObject[] = [
+  {
+    title: "Cancel",
+    value: "cancel",
+  },
+  {
+    title: "Invite players",
+    value: "invite players",
   },
 ];
 
