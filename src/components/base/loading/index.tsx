@@ -1,11 +1,11 @@
-import clsx from 'clsx';
-import type { Dispatch, SetStateAction } from 'react';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import clsx from "clsx";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import { DataFirebase } from '@/firebase/handle';
+import { DataFirebase } from "@/firebase/handle";
 
-import { BasicColors } from '../basic colors';
+import { BasicColors } from "../basic colors";
 
 export const Loading = ({
   value,
@@ -32,7 +32,7 @@ export const Loading = ({
       randomIndex = Math.min(randomIndex, BasicColors.length - 1);
       setNumber({
         value: i,
-        color: BasicColors[randomIndex] ?? 'text-black',
+        color: BasicColors[randomIndex] ?? "text-black",
       });
 
       i++;
@@ -52,17 +52,17 @@ export const Loading = ({
         }
       }}
       className={clsx(
-        'absolute z-50 flex h-full w-full items-center justify-center bg-white transition-all duration-300',
-        value >= 99 ? 'bg-white/90' : 'bg-white',
+        "absolute z-50 flex h-full w-full items-center justify-center bg-white transition-all duration-300",
+        value >= 99 ? "bg-white/90" : "bg-white"
       )}
     >
       <div
         className={clsx(
-          'circle_loading absolute h-24 w-28 rounded-full border-8 border-red-600 bg-transparent transition-all duration-300',
-          value >= 99 ? 'opacity-100' : 'opacity-0',
+          "circle_loading absolute h-24 w-28 rounded-full border-8 border-red-600 bg-transparent transition-all duration-300",
+          value >= 99 ? "opacity-100" : "opacity-0"
         )}
       />
-      <h2 className={clsx('text-5xl font-medium', color)}>{value}</h2>
+      <h2 className={clsx("text-5xl font-medium", color)}>{value}</h2>
     </div>
   );
 };

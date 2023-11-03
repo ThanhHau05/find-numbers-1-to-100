@@ -20,7 +20,38 @@ export const handleClickNumber = async ({
       if (item.number === number) {
         return {
           ...item,
-          clicked: true,
+          clicked: number,
+        };
+      }
+      return item;
+    });
+    dispatch(
+      DataActions.setCurrentModeData({
+        ...data,
+        numberToSearch: data.numberToSearch + 1,
+        arrayNumber: newArr,
+      })
+    );
+  }
+};
+
+export const handleClickNumberWithFriend = async ({
+  number,
+  dispatch,
+  data,
+  idUser,
+}: {
+  number: number;
+  dispatch: Dispatch<AnyAction>;
+  data: PlayingModeInformation;
+  idUser: number;
+}) => {
+  if (number === data.numberToSearch) {
+    const newArr = data.arrayNumber.map((item) => {
+      if (item.number === number) {
+        return {
+          ...item,
+          clicked: idUser,
         };
       }
       return item;

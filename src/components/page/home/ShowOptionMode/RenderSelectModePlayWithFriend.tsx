@@ -53,19 +53,22 @@ export const RenderSelectModePlayWithFriend = () => {
         </div>
       </div>
       <RenderButton
-        show={showinfoidsearch === "Online players"}
+        showInfo={showinfoidsearch === "Online players"}
         idInvite={+idsearch}
+        setShowInfo={setShowInfoIDSearch}
       />
     </div>
   );
 };
 
 const RenderButton = ({
-  show,
+  showInfo,
   idInvite,
+  setShowInfo,
 }: {
-  show: boolean;
+  showInfo: boolean;
   idInvite: number;
+  setShowInfo: (value: string) => void;
 }) => {
   const { currentUserID } = useSelector(selector.user);
   const { setValueShowMode } = useContext(MainContext);
@@ -73,7 +76,7 @@ const RenderButton = ({
     <div className="flex items-center justify-center mt-5 gap-3">
       {SELECT_OPTION_PLAY_WITH_FRIEND.map((item) => (
         <button
-          disabled={item.value === "invite players" && !show}
+          disabled={item.value === "invite players" && !showInfo}
           key={item.value}
           className={clsx(
             "bg-white px-2 rounded-lg border-[1.5px] py-2 w-32 hover:bg-gray-100 shadow-md",
@@ -81,16 +84,16 @@ const RenderButton = ({
             item.value === "invite players"
               ? "border-green-400 text-green-600"
               : null,
-            item.value === "invite players" && !show
+            item.value === "invite players" && !showInfo
               ? "opacity-50 cursor-not-allowed"
               : null
           )}
-          onClick={() => {
+          onClick={async () => {
             if (item.value === "cancel") {
               setValueShowMode("");
             }
-            if (show) {
-              handleInvitePlayers(idInvite, currentUserID);
+            if (showInfo) {
+              handleInvitePlayers(idInvite, currentUserID, setShowInfo);
             }
           }}
         >

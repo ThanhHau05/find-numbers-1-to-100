@@ -3,7 +3,7 @@ import {
   SELECT_OPTION_MODE_SANGLE_PLAYER,
 } from "@/components/constants/select-options";
 import { handleCreateNewGame } from "@/components/page/home";
-import { PlayGameLogo } from "@/components/page/play";
+import { PlayGameLogo } from "@/components/page/play/PlayGameLogo";
 import { handleFinishGame } from "@/components/page/play/handle";
 import { MainContext } from "@/context/main-context";
 import { selector } from "@/redux";
