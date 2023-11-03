@@ -6,7 +6,11 @@ import { handleRandomId } from "@/components/handled";
 import { UserActions } from "@/redux";
 
 import { db, myFirebase } from ".";
-import { SelectOptionUserInfo } from "@/components/constants/select-options";
+import {
+  PlayingModeInformation,
+  SelectOptionUserInfo,
+} from "@/components/constants/select-options";
+import { handleCreateNewGame } from "@/components/page/home";
 
 export const DataFirebase = {
   AddNewUserId: async (dispatch: Dispatch<AnyAction>) => {
@@ -27,7 +31,11 @@ export const DataFirebase = {
       });
     }
     if (!isCheckId.exists()) {
-      const data: SelectOptionUserInfo = { status: true, invitation: 0 };
+      const data: SelectOptionUserInfo = {
+        status: true,
+        invitation: 0,
+        idPlayWithFriend: 0,
+      };
       await setDoc(idRef, data, { merge: true });
     }
     dispatch(UserActions.setCurrentUserID(id));
@@ -64,6 +72,53 @@ export const DataFirebase = {
     const isCheck = await getDoc(docRef);
     if (isCheck.exists()) {
       updateDoc(docRef, { ...isCheck.data(), invitation: IDInvitation });
+    }
+  },
+  InvitationCancel: async (id: number) => {
+    const docRef = doc(db, "Users", id.toString());
+    const isCheck = await getDoc(docRef);
+    if (isCheck.exists()) {
+      updateDoc(docRef, { ...isCheck.data(), invitation: 0 });
+    }
+  },
+  InvitationAccept: async (
+    idGame: number,
+    idUser: number,
+    idInviter: number
+  ) => {
+    const docRef = doc(db, "PlayWithFriend", idGame.toString());
+    const isCheck = await getDoc(docRef);
+    const idUserRef = doc(db, "Users", idUser.toString());
+    const isCheckIdUser = await getDoc(idUserRef);
+    const idInviterRef = doc(db, "Users", idInviter.toString());
+    const isCheckidInviter = await getDoc(idInviterRef);
+    if (!isCheck.exists()) {
+      const data: PlayingModeInformation = {
+        arrayNumber: handleCreateNewGame(),
+        mode: "friends",
+        numberToSearch: 0,
+        time: "3:00",
+      };
+      setDoc(docRef, data, { merge: true });
+    }
+    if (isCheckIdUser.exists()) {
+      updateDoc(idUserRef, {
+        ...isCheckIdUser.data(),
+        idPlayWithFriend: idGame,
+      });
+    }
+    if (isCheckidInviter.exists()) {
+      updateDoc(idInviterRef, {
+        ...isCheckidInviter.data(),
+        idPlayWithFriend: idGame,
+      });
+    }
+  },
+  SetIDInvitation: async (id: number, idInvitation: number) => {
+    const docRef = doc(db, "Users", id.toString());
+    const isCheck = await getDoc(docRef);
+    if (isCheck.exists()) {
+      updateDoc(docRef, { ...isCheck.data(), invitation: idInvitation });
     }
   },
 };

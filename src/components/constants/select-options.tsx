@@ -5,6 +5,7 @@ import type { IconType } from "react-icons/lib";
 export interface SelectOptionUserInfo {
   status: boolean;
   invitation: number;
+  idPlayWithFriend: number;
 }
 
 export interface SelectOptionObject {
@@ -26,7 +27,6 @@ export interface SelectOptionContent {
 }
 
 export interface PlayingModeInformation {
-  id?: string;
   mode: string;
   time: string;
   arrayNumber: SelectOptionNumber[];
@@ -39,7 +39,8 @@ export interface SelectOptionNumber {
   color: string;
   left: number;
   top: number;
-  clicked: boolean;
+  clicked: number;
+  idUser?: number;
 }
 
 export const SELECT_OPTION_BUTTON_FINISH_GAME: SelectOptionObject[] = [
@@ -64,6 +65,17 @@ export const SELECT_OPTION_NOTIFICCATION: SelectOptionObject[] = [
   },
 ];
 
+export const SELECT_OPTION_INVITAITON: SelectOptionObject[] = [
+  {
+    title: "Cancel",
+    value: "cancel",
+  },
+  {
+    title: "Accept",
+    value: "accept",
+  },
+];
+
 export const SELECT_OPTION_PLAY_WITH_FRIEND: SelectOptionObject[] = [
   {
     title: "Cancel",
@@ -84,34 +96,35 @@ export const SELECT_OPTION_MODE_SANGLE_PLAYER: SelectOptionMode[] = [
   },
   {
     title: "Easy",
-    Title2: "5 min",
+    Title2: "10 min",
     value: "easy",
-    time: "5:00",
+    time: "10:00",
   },
   {
     title: "Medium",
-    Title2: "3 min",
+    Title2: "5 min",
     value: "medium",
-    time: "3:00",
+    time: "5:00",
   },
   {
     title: "Difficult",
-    Title2: "1 min",
+    Title2: "3 min",
     value: "difficult",
-    time: "1:30",
+    time: "3:00",
   },
 ];
 
 export const BUTTON_HOME: SelectOptionContent[] = [
   {
-    title: "Single Player",
+    //Single Player
+    title: "Select Mode",
     children: (
       <div className="relative mb-2 h-24 w-full">
         <div className="absolute left-2.5 inline-block rotate-12 text-4xl text-amber-500">
           <div className="circle_text_number absolute -left-2.5 h-full w-14 border-[5px] border-indigo-600" />
           19
         </div>
-        <div className="absolute right-2.5 top-1.5 inline-block -rotate-45 text-4xl text-pink-500">
+        <div className="absolute right-0 top-1.5 inline-block -rotate-45 text-4xl text-pink-500">
           54
         </div>
         <div className="absolute -bottom-1.5 left-10 inline-block -rotate-12 text-4xl text-red-800">
@@ -121,25 +134,25 @@ export const BUTTON_HOME: SelectOptionContent[] = [
     ),
     value: "single",
   },
-  {
-    title: "Play with Friends",
-    children: (
-      <div className="relative flex h-24 w-full flex-col justify-around">
-        <div className="inline-block rotate-12 pl-2 text-4xl leading-8 text-green-500">
-          51
-        </div>
-        <div className="flex w-full justify-around">
-          <div className="relative text-4xl">
-            <div className="circle_text_number absolute -left-2 h-full w-[60px] border-[5px] border-red-600" />
-            49
-          </div>
-          <div className="relative text-4xl text-orange-500">
-            <div className="circle_text_number absolute -left-2 h-full w-[60px] rotate-[20deg] border-[5px] border-indigo-600" />
-            50
-          </div>
-        </div>
-      </div>
-    ),
-    value: "friends",
-  },
+  // {
+  //   title: "Play with Friends",
+  //   children: (
+  //     <div className="relative flex h-24 w-full flex-col justify-around">
+  //       <div className="inline-block rotate-12 pl-2 text-4xl leading-8 text-green-500">
+  //         51
+  //       </div>
+  //       <div className="flex w-full justify-around">
+  //         <div className="relative text-4xl">
+  //           <div className="circle_text_number absolute -left-2 h-full w-[60px] border-[5px] border-red-600" />
+  //           49
+  //         </div>
+  //         <div className="relative text-4xl text-orange-500">
+  //           <div className="circle_text_number absolute -left-2 h-full w-[60px] rotate-[20deg] border-[5px] border-indigo-600" />
+  //           50
+  //         </div>
+  //       </div>
+  //     </div>
+  //   ),
+  //   value: "friends",
+  // },
 ];

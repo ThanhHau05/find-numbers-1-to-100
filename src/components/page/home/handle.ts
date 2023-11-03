@@ -30,7 +30,7 @@ export const handleCreateNewGame = () => {
         color: BasicColors[randomIndex] ?? "text-black",
         left: 0,
         top: 0,
-        clicked: false,
+        clicked: 0,
       };
     });
   newGame = newGame.sort(() => Math.random() - 0.5);
@@ -103,9 +103,19 @@ export const handleIDSearch = async (id: number, idUser: number) => {
   return false;
 };
 
-export const handleInvitePlayers = async (idInvite: number, idUser: number) => {
+export const handleInvitePlayers = async (
+  idInvite: number,
+  idUser: number,
+  setShowInfo: (value: string) => void
+) => {
   const invitation = await DataFirebase.GetInvitationUser(idInvite);
   if (invitation === 0) {
     await DataFirebase.SetInvitationUser(idInvite, idUser);
+    setShowInfo("Invite successfully!");
+    return;
+  } else if (invitation === idUser) {
+    setShowInfo("You have already invited this player!");
+    return;
   }
+  setShowInfo("Invite failed!");
 };

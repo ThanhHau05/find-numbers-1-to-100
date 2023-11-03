@@ -8,6 +8,8 @@ interface MainProps {
   showfinishgame: string;
   setShowOutGame: Dispatch<SetStateAction<boolean>>;
   setShowFinishGame: Dispatch<SetStateAction<string>>;
+  idinvitation: number;
+  setIDInvitation: Dispatch<SetStateAction<number>>;
 }
 
 export const MainContext = createContext({} as MainProps);
@@ -16,6 +18,7 @@ export const MainProvider = ({ children }: { children: ReactNode }) => {
   const [valueshowmode, setValueShowMode] = useState("");
   const [showoutgame, setShowOutGame] = useState(false);
   const [showfinishgame, setShowFinishGame] = useState("");
+  const [idinvitation, setIDInvitation] = useState(0);
   const value = useMemo(
     () => ({
       valueshowmode,
@@ -24,6 +27,8 @@ export const MainProvider = ({ children }: { children: ReactNode }) => {
       setShowOutGame,
       showfinishgame,
       setShowFinishGame,
+      idinvitation,
+      setIDInvitation,
     }),
     [
       valueshowmode,
@@ -32,6 +37,8 @@ export const MainProvider = ({ children }: { children: ReactNode }) => {
       setShowOutGame,
       showfinishgame,
       setShowFinishGame,
+      idinvitation,
+      setIDInvitation,
     ]
   );
   return <MainContext.Provider value={value}>{children}</MainContext.Provider>;

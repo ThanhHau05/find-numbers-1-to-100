@@ -3,44 +3,42 @@ import type { DefaultActionCreators, DefaultActionTypes } from "reduxsauce";
 import { createActions, createReducer } from "reduxsauce";
 import * as Immutable from "seamless-immutable";
 
-import type { PlayingModeInformation } from "@/components/constants/select-options";
-
 /* ------------- Model interface Create Action ------------- */
 interface DataAction extends AnyAction {}
 
 interface IActionTypes extends DefaultActionTypes {
-  SET_CURRENT_MODE_DATA: "setCurrentModeData";
+  SET_CURRENT_ID_PLAY_WITH_FRIEND: "setCurrentIDPlayWithFriend";
 }
 
 interface IActionCreators extends DefaultActionCreators {
-  setCurrentModeData: (data: PlayingModeInformation) => AnyAction;
+  setCurrentIDPlayWithFriend: (id: number) => AnyAction;
 }
 
 type IActions = DataAction | AnyAction;
 
-export interface DataState {
-  currentModeData: PlayingModeInformation;
+export interface IDState {
+  currentIDPlayWithFriend: number;
 }
 
-type ImmutableMyType = Immutable.ImmutableObject<DataState>;
+type ImmutableMyType = Immutable.ImmutableObject<IDState>;
 
 /* ------------- Types and Action Creators ------------- */
 const { Types, Creators } = createActions<IActionTypes, IActionCreators>({
-  setCurrentModeData: ["data"],
+  setCurrentIDPlayWithFriend: ["idPlayWithFriend"],
 });
 
 export const UserTypes = Types;
 export default Creators;
 
 const INITIAL_STATE: ImmutableMyType = Immutable.from({
-  currentModeData: <PlayingModeInformation>{},
+  currentIDPlayWithFriend: 0,
 });
 
-const setCurrentModeData = (
+const setCurrentIDPlayWithFriend = (
   state: ImmutableMyType,
-  { data }: { data: PlayingModeInformation }
-) => state.merge({ currentModeData: data });
+  { idPlayWithFriend }: { idPlayWithFriend: number }
+) => state.merge({ currentIDPlayWithFriend: idPlayWithFriend });
 
 export const reducer = createReducer<ImmutableMyType, IActions>(INITIAL_STATE, {
-  [Types.SET_CURRENT_MODE_DATA]: setCurrentModeData,
+  [Types.SET_CURRENT_ID_PLAY_WITH_FRIEND]: setCurrentIDPlayWithFriend,
 });

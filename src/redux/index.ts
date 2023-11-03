@@ -1,27 +1,32 @@
 /* eslint-disable import/no-duplicates */
-import { configureStore } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux';
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import createSagaMiddleware from 'redux-saga';
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import createSagaMiddleware from "redux-saga";
 
-import type { DataState } from './Data/DataRedux';
-import DataActions, { reducer as DataReducer } from './Data/DataRedux';
-import immutablePersistenceTransform from './immutable-persistence-transfrom';
-import Saga from './saga';
-import type { UserState } from './User/UserRedux';
-import UserActions, { reducer as UserReducer } from './User/UserRedux';
+import type { DataState } from "./Data/DataRedux";
+import DataActions, { reducer as DataReducer } from "./Data/DataRedux";
+import immutablePersistenceTransform from "./immutable-persistence-transfrom";
+import Saga from "./saga";
+import type { UserState } from "./User/UserRedux";
+import UserActions, { reducer as UserReducer } from "./User/UserRedux";
+import IdPlayWithFriendActions, {
+  IDState,
+  reducer as IdPlayWithFriendReducer,
+} from "./Data/IDPlayWithFriend";
 
 /* ------------- Assemble The Reducers ------------- */
 export const reducers = combineReducers({
   user: UserReducer,
   data: DataReducer,
+  idPlayWithFriend: IdPlayWithFriendReducer,
 });
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['user', 'data'],
+  whitelist: ["user", "data", "idPlayWithFriend"],
   transforms: [immutablePersistenceTransform],
 };
 
@@ -57,5 +62,7 @@ export type RootState = ReturnType<typeof reducers>;
 export const selector = {
   user: (state: RootState) => state.user as unknown as UserState,
   data: (state: RootState) => state.data as unknown as DataState,
+  idPlayWithFriend: (state: RootState) =>
+    state.idPlayWithFriend as unknown as IDState,
 };
-export { DataActions, UserActions };
+export { DataActions, UserActions, IdPlayWithFriendActions };
